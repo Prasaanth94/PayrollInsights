@@ -1,0 +1,11 @@
+employee_id,employee_name,department,role,base_salary,overtime_pay,bonus,deductions,net_pay,pay_period
+1,Employee_1,Engineering,Software Engineer,4128,414,138,458,4222,2026-02
+2,Employee_2,Finance,ACcountant,6532,881,67,492,6988,2026-02
+3,Employee_3,Marketing,Content Creator,6120,669,58,412,6435,2026-02
+4,Employee_4,HR,HR Specialist,7883,468,12,433,7930,2026-02
+5,Employee_5,Engineering,Software Engineer,6987,437,218,307,7335,2026-02
+6,Employee_6,Sales,Sales Rep,3654,870,49,402,4171,2026-02
+7,Employee_7,HR,HR Specialist,4966,182,405,323,5230,2026-02
+8,Employee_8,HR,HR Specialist,4815,813,459,318,5769,2026-02
+9,Employee_9,HR,HR Specialist,7154,957,459,378,8192,2026-02
+10,Employee_10,Engineering,DevOps Engineer,3804,235,345,455,3929,2026-02

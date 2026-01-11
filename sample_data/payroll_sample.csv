@@ -1,0 +1,6 @@
+employee_id,employee_name,department,role,base_salary,overtime_pay,bonus,deductions,net_pay,pay_period
+1,Employee_1,Engineering,Software Engineer,4128,353,110,431,4160,2026-01
+2,Employee_2,Finance,ACcountant,6532,606,71,324,6885,2026-01
+3,Employee_3,Marketing,Content Creator,6120,917,296,489,6844,2026-01
+4,Employee_4,HR,HR Specialist,7883,169,13,498,7567,2026-01
+5,Employee_5,Engineering,Software Engineer,6987,995,377,326,8033,2026-01

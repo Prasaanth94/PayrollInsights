@@ -32,8 +32,7 @@ def extract_payroll(source_path: str) -> pd.DataFrame:
     
     os.makedirs(RAW_DIR, exist_ok=True)
 
-    #copu file exactly into raw
-    shutil.copy(source_path, raw_path)
+    
     
 
     return df

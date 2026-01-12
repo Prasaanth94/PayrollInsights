@@ -15,7 +15,7 @@ ROLES = {
     "Engineering" : ["Software Engineer", "DevOps Engineer", "Data Analyst"],
     "Sales" : ["Account Manager", "Sales Rep", "Team Leader"],
     "HR" : ["HR Specialist"],
-    "Finance" : ["ACcountant", "Finance Analyst"],
+    "Finance" : ["Accountant", "Finance Analyst"],
     "Marketing" : ["Marketing Specialist", "Content Creator"]
 
 }

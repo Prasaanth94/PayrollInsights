@@ -25,7 +25,7 @@ OVERTIME_RANGE = (0, 1000)
 BONUS_RANGE = (0, 500)
 DEDUCTIONS_RANGE = (300, 500)
 
-OUTPUT_DIR = "data_generator/output"
+OUTPUT_DIR = "data/raw"
 SAMPLE_CSV = "sample_data/payroll_sample.csv"
 
 #Functions

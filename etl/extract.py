@@ -3,7 +3,7 @@ import os
 import shutil
 
 
-SOURCE_DIR = "data_generator/output"
+
 RAW_DIR = "data/raw"
 
 REQUIRED_COLUMNS = [
@@ -19,10 +19,8 @@ REQUIRED_COLUMNS = [
     "pay_period"
 ]
 
-def extract_payroll(filename: str) -> pd.DataFrame:
-    source_path = os.path.join(SOURCE_DIR, filename)
-    raw_path = os.path.join(RAW_DIR, filename)
-
+def extract_payroll(source_path: str) -> pd.DataFrame:
+    
     if not os.path.exists(source_path):
         raise FileNotFoundError(f"File not found: {source_path}")
     

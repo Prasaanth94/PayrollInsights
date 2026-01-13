@@ -75,5 +75,39 @@ def update_payroll_signals():
         END;                  
         """))
 
+        #salary spike flag
+        conn.execute(text("""
+        UPDATE pyroll_signals s
+        JOIN payroll p
+        ON s.employee_id = p.employee_id
+        AND s.pay_period = p.pay_period
+        SET s.salary_spike_flag =
+            CASE
+                WHEN p.salary_change_pct > 20 THEN 1
+                ELSE 0
+            END
+        """))
+
+        #low net pay anomaly
+        conn.execute(text("""
+        UPDATE payroll_signals s
+        JOIN payroll p
+        on s.employee_id = p.employee_id
+        AND s.pay_period = p.pay_period
+        JOIN (
+            SELECT department, pay_period, AVG(net_pay) AS dept_avg)
+            FROM payroll
+            GROUP BY deparment, pay_period
+        )d
+          ON p.department = d.department
+          AND p.pay_period - d.pay_period
+          SET s.low_net_pay_flag =
+            CASE
+                WHEN p.net_pay < d.dept_avg * 0.75 THEN 1
+                ELSE 0
+            END;              
+
+        """))
+
     print("Payroll signals updated successfully.")
    

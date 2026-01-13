@@ -3,35 +3,33 @@ import pandas as pd
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 
-PROCESSED_FOLDER = "data/processed"
-
+# Load environment variables
 load_dotenv()
-
-DB_USER = "root"
+DB_USER = "payroll_app"
 DB_PASSWORD = os.getenv("MYSQL_PASSWORD")
 DB_HOST = "localhost"
-DB_NAME = "payroll_insights"
+DB_NAME = "payroll_db"
 
+# Create SQLAlchemy engine
 engine = create_engine(
     f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
 )
 
-def load_to_mysql():
-    for filename in os.listdir(PROCESSED_FOLDER):
-        if filename.endswith(".csv"):
-            file_path = os.path.join(PROCESSED_FOLDER, filename)
-            df = pd.read_csv(file_path)
+def load_to_mysql(file_path: str):
+    """
+    Load a CSV file into the 'payroll' table in MySQL.
+    """
+    print(f"Loading {file_path} into MySQL...")
+    df = pd.read_csv(file_path)
 
+    # Optional: clean column names (remove spaces, lowercase)
+    df.columns = [col.strip() for col in df.columns]
 
-            print(f"Loading {filename} into Mysql...")
-            df.to_sql(
-                name="payroll",
-                con=engine,
-                if_exists="append",
-                index=False
-            )
-
-    print("Data loaded successfully")
-
-if __name__ == "__main__":
-    load_to_mysql()        
+    # Load into MySQL
+    df.to_sql(
+        name="payroll",
+        con=engine,
+        if_exists="append",  # append to existing table
+        index=False
+    )
+    print(f"Successfully loaded {len(df)} rows into MySQL.")

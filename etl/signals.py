@@ -1,43 +1,56 @@
 import mysql.connector
+from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 
+DB_USER = "payroll_app"
+DB_PASSWORD = os.getenv("MYSQL_PASSWORD")
+DB_HOST = "localhost"
+DB_NAME = "payroll_db"
+
+
+engine = create_engine(
+    f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
+)
+
 def update_payroll_signals():
-    #connect to my sql
-    conn = mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        password = os.getenv("MYSQL_PASSWORD"),
-        database = "payroll_db"
-    ) 
+    print("Updating payroll signals...")
 
-    cursor = conn.cursor()
 
-    try:
-        # 1 Net pay mismatch
-        cursor.execute("""
+    with engine.begin() as conn:
+        #ensure base rows exist
+        conn.execute(text("""
+            INSERT IGNORE INTO payroll_signals (employee_id, pay_period)
+            SELECT employee_id, pay_period
+            FROM payroll;              
+        """))
+
+         #net pay mismatch
+        conn.execute(text("""
             UPDATE payroll_signals s
             JOIN payroll p
-              ON s.employee_id = p.employee_id
-             AND s.pay_period = p.pay_period
-            SET s.net_pay_mismatch = ABS(p.net_pay - p.calculated_net_pay) > 0.01
-            WHERE s.employee_id IS NOT NULL;
-        """)
-
-        # 2 Overtime ratio
-        cursor.execute("""
-            UPDATE payroll_signals s
+            ON s.employee_id = p.employee_id
+            AND s.pay_period = p.pay_period
+            SET s.net_pay_mismatch =
+                ABS(p.net_pay - p.calculated_net_pay) > 0.01;              
+            
+         """))
+        
+        #over time ratio
+        conn.execute(text("""
+            UPDATE payroll_signals S
             JOIN payroll p
-              ON s.employee_id = p.employee_id
-             AND s.pay_period = p.pay_period
-            SET s.overtime_ratio = ROUND(p.overtime_pay / NULLIF(p.base_salary, 0), 2)
-            WHERE s.employee_id IS NOT NULL;
-        """)
+            ON s.employee_id = p.employee_id
+            AND s.pay_period = p.pay_period
+            SET s.overtime_ratio =
+                ROUND(p.overtime_pay / NULLIF(p.base_salary, 0), 2);
 
-        # 3 Department deviation percentage
-        cursor.execute("""
+        """))
+
+        # Department deviation %
+        conn.execute(text("""
             UPDATE payroll_signals s
             JOIN payroll p
               ON s.employee_id = p.employee_id
@@ -49,20 +62,18 @@ def update_payroll_signals():
             ) d
               ON p.department = d.department
              AND p.pay_period = d.pay_period
-            SET s.department_deviation_pct = ROUND((p.net_pay - d.dept_avg) / d.dept_avg * 100, 2)
-            WHERE s.employee_id IS NOT NULL;
-        """)
+            SET s.department_deviation_pct =
+                ROUND((p.net_pay - d.dept_avg) / d.dept_avg * 100, 2);
+        """))
 
-        
+        #high over time flag
+        conn.execute(text("""
+        UPDATE payroll_signals
+        SET high_overtime_flag = CASE
+            WHEN overtime_ratio > 0.30 THEN 1
+            ELSE 0
+        END;                  
+        """))
 
-        # Commit all changes
-        conn.commit()
-        print("Payroll signals updated successfully.")
-
-    except mysql.connector.Error as err:
-        print("Error updating payroll signals:", err)
-        conn.rollback()  # rollback in case of error
-
-    finally:
-        cursor.close()
-        conn.close()
+    print("Payroll signals updated successfully.")
+   

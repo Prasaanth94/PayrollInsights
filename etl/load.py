@@ -18,7 +18,7 @@ def load_to_mysql(file_path: str):
     df.to_sql(
         name="payroll",
         con=engine,
-        if_exists="append",  # append to existing table
+        if_exists="replace",  # append to existing table
         index=False
     )
     print(f"Successfully loaded {len(df)} rows into MySQL.")

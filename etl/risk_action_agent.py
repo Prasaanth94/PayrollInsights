@@ -1,8 +1,12 @@
 from sqlalchemy import text
 from db.engine import engine
+from etl.alerts import send_alert
+import pandas as pd
 
 def run_risk_agent():
     print(("Running Payroll risk agent"))
+
+    high_risk_employees = []
 
     with engine.begin() as conn:
         result = conn.execute(text("""
@@ -29,10 +33,6 @@ def run_risk_agent():
             if row.salary_spike_flag == 1:
                 score += 40
                 reasons.append("Salary spike")    
-
-            if row.low_net_pay_flag == 1:
-                socre += 30
-                reasons.append("Low net pay")    
 
             if row.high_overtime_flag == 1:
                 score += 25
@@ -68,6 +68,22 @@ def run_risk_agent():
                 "score" : score,
                 "level" : level,
                 "reasons" : ", ".join(reasons)
-            })            
+            })  
 
-print("Risk Agent completed.")
+            if level == "HIGH":
+                high_risk_employees.append({
+                    "employee_id" : row.employee_id,
+                    "pay_period" : row.pay_period,
+                    "risk_score" : score
+                })          
+
+    
+
+            if high_risk_employees:
+                subject = "Payroll Risk Alert: High-Risk Employees Detected"
+                body = "The Following employees have HIGH payroll Risk: \n\n"
+                for emp in high_risk_employees():
+                    body += f"Employee_id: {row['employee_id']}, Pay Period: {row['pey_period']}, Risk ScoreL:{row['risk_score']}\n"
+                send_alert(subject,body)    
+
+    print("Risk Agent completed.")

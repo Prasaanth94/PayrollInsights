@@ -1,11 +1,11 @@
 employee_id,employee_name,department,role,base_salary,overtime_pay,bonus,deductions,net_pay,pay_period
-1,Employee_1,Sales,Team Leader,3759,466,435,422,4238,2026-02
-2,Employee_2,Sales,Team Leader,7715,28,88,320,7511,2026-02
-3,Employee_3,Engineering,Data Analyst,4251,310,38,477,4122,2026-02
-4,Employee_4,HR,HR Specialist,6925,645,387,355,7602,2026-02
-5,Employee_5,Marketing,Marketing Specialist,6151,321,283,441,6314,2026-02
-6,Employee_6,HR,HR Specialist,3449,605,21,453,3622,2026-02
-7,Employee_7,Marketing,Content Creator,4443,820,264,313,5214,2026-02
-8,Employee_8,Finance,Finance Analyst,3009,151,213,346,3027,2026-02
-9,Employee_9,Engineering,DevOps Engineer,3693,110,413,364,3852,2026-02
-10,Employee_10,Finance,Accountant,4969,593,600,457,5705,2026-02
+1,Employee_1,HR,HR Specialist,9985,227,140,389,9963,2026-02
+2,Employee_2,Marketing,Marketing Specialist,5755,775,291,323,6498,2026-02
+3,Employee_3,Marketing,Content Creator,9628,388,253,499,9770,2026-02
+4,Employee_4,Sales,Account Manager,5705,594,130,303,6126,2026-02
+5,Employee_5,HR,HR Specialist,3130,908,600,432,4206,2026-02
+6,Employee_6,Engineering,Data Analyst,4834,877,338,304,5745,2026-02
+7,Employee_7,Finance,Finance Analyst,6487,357,426,435,6835,2026-02
+8,Employee_8,HR,HR Specialist,5841,477,252,0,6570,2026-02
+9,Employee_9,Sales,Account Manager,4640,562,446,391,5257,2026-02
+10,Employee_10,Marketing,Marketing Specialist,6100,757,91,428,6520,2026-02

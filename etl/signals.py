@@ -77,7 +77,7 @@ def update_payroll_signals():
 
         #salary spike flag
         conn.execute(text("""
-        UPDATE pyroll_signals s
+        UPDATE payroll_signals s
         JOIN payroll p
         ON s.employee_id = p.employee_id
         AND s.pay_period = p.pay_period
@@ -95,9 +95,9 @@ def update_payroll_signals():
         on s.employee_id = p.employee_id
         AND s.pay_period = p.pay_period
         JOIN (
-            SELECT department, pay_period, AVG(net_pay) AS dept_avg)
+            SELECT department, pay_period, AVG(net_pay) AS dept_avg
             FROM payroll
-            GROUP BY deparment, pay_period
+            GROUP BY department, pay_period
         )d
           ON p.department = d.department
           AND p.pay_period - d.pay_period

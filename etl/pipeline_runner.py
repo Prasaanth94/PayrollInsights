@@ -3,6 +3,7 @@ from etl.extract import extract_payroll
 from etl.transform import transform_payroll
 from etl.load import load_to_mysql
 from etl.signals import update_payroll_signals
+from etl.agent import run_payroll_agent
 
 RAW_FOLDER = "data/raw"
 PROCESSED_FOLDER = "data/processed"
@@ -41,6 +42,11 @@ def run_pipeline(test_file=None):
             print("Updating payroll signals")
             update_payroll_signals()
             print("Signals updated Successfully")
+
+            #Agent review
+            print("Agent reviewing")
+            run_payroll_agent()
+            print("Agent review successful")
 
 if __name__ == "__main__":
     run_pipeline()

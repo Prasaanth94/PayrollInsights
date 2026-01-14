@@ -1,19 +1,7 @@
-import mysql.connector
-from sqlalchemy import create_engine, text
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
-DB_USER = "payroll_app"
-DB_PASSWORD = os.getenv("MYSQL_PASSWORD")
-DB_HOST = "localhost"
-DB_NAME = "payroll_db"
+from sqlalchemy import text
+from db.engine import engine
 
 
-engine = create_engine(
-    f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
-)
 
 def update_payroll_signals():
     print("Updating payroll signals...")

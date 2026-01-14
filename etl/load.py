@@ -1,19 +1,8 @@
-import os
 import pandas as pd
-from sqlalchemy import create_engine
-from dotenv import load_dotenv
+from db.engine import engine
 
-# Load environment variables
-load_dotenv()
-DB_USER = "payroll_app"
-DB_PASSWORD = os.getenv("MYSQL_PASSWORD")
-DB_HOST = "localhost"
-DB_NAME = "payroll_db"
 
-# Create SQLAlchemy engine
-engine = create_engine(
-    f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
-)
+
 
 def load_to_mysql(file_path: str):
     """

@@ -4,6 +4,7 @@ from etl.transform import transform_payroll
 from etl.load import load_to_mysql
 from etl.signals import update_payroll_signals
 from etl.risk_scoring_agent import run_payroll_agent
+from etl.risk_action_agent import run_risk_agent
 
 RAW_FOLDER = "data/raw"
 PROCESSED_FOLDER = "data/processed"
@@ -47,6 +48,11 @@ def run_pipeline(test_file=None):
             print("Agent reviewing")
             run_payroll_agent()
             print("Agent review successful")
+
+            #Agent actions
+            print("Agent working on actions")
+            run_risk_agent()
+            print("Agent actions made.")
 
 if __name__ == "__main__":
     run_pipeline()

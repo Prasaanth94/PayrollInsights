@@ -57,7 +57,7 @@ def generate_payroll_for_employee(emp, base_salary_prev=None, force_anomaly=Fals
         )
         if anomaly_type == "SALARY_SPIKE":
            if base_salary_prev is not None:
-                base_salary = int(base_salary_prev * 1.25)
+                base_salary = int(base_salary_prev * 2)
            else:
                 base_salary = random.randint(int(SALARY_RANGE[1]*0.9), SALARY_RANGE[1])
         elif anomaly_type == "OVERTIME_SURGE":

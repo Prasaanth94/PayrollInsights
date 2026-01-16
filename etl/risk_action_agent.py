@@ -69,13 +69,4 @@ def run_risk_agent():
         index=False
     )
 
-    # Send alert for HIGH risk employees
-    high_risk_df = df[df["risk_level"] == "HIGH"]
-    if not high_risk_df.empty:
-        subject = "Payroll Risk Alert: High-Risk Employees Detected"
-        body = "The following employees have HIGH payroll risk:\n\n"
-        for _, row in high_risk_df.iterrows():
-            body += f"Employee_id: {row['employee_id']}, Pay Period: {row['pay_period']}, Risk Score: {row['risk_score']}\n"
-        send_alert(subject, body)
-
-    print("Payroll risk agent completed.")
+   
